@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-11-23)
 
 - `scripthook.dll`: a self-contained hook. Finds the game module (the loader's list or images
   mapped by a runtime), locates the natives table and the script tick by patterns from

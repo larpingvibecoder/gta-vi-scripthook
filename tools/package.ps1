@@ -24,6 +24,9 @@ try {
     New-Item -ItemType Directory -Force $dist | Out-Null
     Copy-Item "$t\scripthook.dll", "$t\shk-loader.exe", "$t\shk-natives.exe" $dist
     Copy-Item (Join-Path $root 'core\scripthook.toml'), (Join-Path $root 'core\mod.toml') $dist
+    # licences: the project's own, and Inter's (the font is embedded in scripthook.dll and the menu)
+    Copy-Item (Join-Path $root 'LICENSE-MIT'), (Join-Path $root 'LICENSE-APACHE'), (Join-Path $root 'THIRD_PARTY.md'), (Join-Path $root 'README.md') $dist
+    Copy-Item (Join-Path $root 'assets\fonts\Inter-LICENSE.txt') (Join-Path $dist 'Inter-LICENSE.txt')
     $layout = @{
         'menu'    = @(@("$t\shk_menu.dll"), @('menu\mod.toml', 'menu\menu.toml'))
         'trainer' = @(@("$t\shk_trainer.dll"), @('trainer\mod.toml', 'trainer\trainer.toml', 'trainer\cheats.toml'))

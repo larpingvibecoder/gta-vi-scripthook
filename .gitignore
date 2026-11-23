@@ -17,3 +17,4 @@ trainer-data/
 # test scratch and previews made locally
 /tests/scratch/
 *.log
+/release/

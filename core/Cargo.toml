@@ -1,0 +1,18 @@
+[package]
+name = "shk-core"
+description = "The gta-vi-scripthook hook DLL (scripthook.dll): runs inside the game process; finds the game module, the natives table and the script tick by patterns, calls natives, runs script fibers, hooks Present and draws the overlay, reads input, loads plugins and serves them scripthook.h."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[lib]
+name = "scripthook"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+shk-sys = { path = "sys" }
+scripthook-sdk = { path = "../sdk/rust" }
+shk-natives = { path = "../natives/gen" }

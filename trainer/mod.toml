@@ -1,0 +1,8 @@
+# Plugin manifest of the gta-vi-scripthook trainer (docs/trainer.md): read by scripthook.dll,
+# also a mod manifest for runtimes with mod folders.
+id = "scripthook-trainer"
+name = "gta-vi-scripthook trainer"
+version = "0.1.0"
+author = "The gta-vi-scripthook contributors"
+description = "44 data-driven trainer features on natives (script hook) and memory cheats. Single-player only."
+plugin = "shk_trainer.dll"

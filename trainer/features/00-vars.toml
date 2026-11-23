@@ -1,0 +1,16 @@
+# gta-vi-scripthook trainer — global variables
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# Data, not code: each [[feature]] lists the statements it runs (docs/trainer.md). Native names
+# are the engine lineage's public names, used as candidates: none is known for this game until
+# the owner's natives database (natives.tsv) gives identifiers, so the trainer greys a feature
+# out with the native it still needs. Override any feature by id in a file of your own.
+
+# Evaluated at their first use in each script tick.
+[vars]
+player = "PLAYER::PLAYER_ID()"
+ped = "PLAYER::PLAYER_PED_ID()"
+veh = "PED::GET_VEHICLE_PED_IS_IN($ped, false)"
+cam_heading = "CAM::GET_GAMEPLAY_CAM_ROT(2).z"
+cash_stat = "hash(\"SP0_TOTAL_CASH\")"
+

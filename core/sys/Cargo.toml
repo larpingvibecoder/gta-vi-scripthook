@@ -1,0 +1,11 @@
+[package]
+name = "shk-sys"
+description = "Hand-written Windows FFI for gta-vi-scripthook (kernel32, user32, D3D12, DXGI, the HLSL compiler), from Microsoft's public documentation."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[lib]
+path = "src/lib.rs"

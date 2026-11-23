@@ -1,0 +1,61 @@
+# gta-vi-scripthook trainer — weapons features
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# Data, not code: each [[feature]] lists the statements it runs (docs/trainer.md). Native names
+# are the engine lineage's public names, used as candidates: none is known for this game until
+# the owner's natives database (natives.tsv) gives identifiers, so the trainer greys a feature
+# out with the native it still needs. Override any feature by id in a file of your own.
+
+
+[[feature]]
+id = "give_weapons"
+name = "Give all weapons"
+group = "Weapons"
+kind = "action"
+data_feature = "give weapons"
+run = ["each weapons: WEAPON::GIVE_WEAPON_TO_PED($ped, $hash, 9999, false, false)", "notify(\"weapons given\")"]
+
+[[feature]]
+id = "ammo"
+name = "Unlimited ammo, no reload"
+group = "Weapons"
+kind = "toggle"
+data_feature = "infinite ammo"
+tick = ["WEAPON::SET_PED_INFINITE_AMMO_CLIP($ped, true)"]
+off = ["WEAPON::SET_PED_INFINITE_AMMO_CLIP($ped, false)"]
+
+[[feature]]
+id = "explosive_ammo"
+name = "Explosive ammo"
+group = "Weapons"
+kind = "toggle"
+data_feature = "explosive / fire ammo, explosive melee"
+tick = ["MISC::SET_EXPLOSIVE_AMMO_THIS_FRAME($player)"]
+
+[[feature]]
+id = "fire_ammo"
+name = "Fire ammo"
+group = "Weapons"
+kind = "toggle"
+data_feature = "explosive / fire ammo, explosive melee"
+tick = ["MISC::SET_FIRE_AMMO_THIS_FRAME($player)"]
+
+[[feature]]
+id = "explosive_melee"
+name = "Explosive melee"
+group = "Weapons"
+kind = "toggle"
+data_feature = "explosive / fire ammo, explosive melee"
+tick = ["MISC::SET_EXPLOSIVE_MELEE_THIS_FRAME($player)"]
+
+[[feature]]
+id = "damage"
+name = "Damage multiplier"
+group = "Weapons"
+kind = "toggle"
+data_feature = "damage multiplier"
+slider = { min = 1, max = 100, step = 1 }
+value = 10
+on = ["PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER($player, $value)"]
+off = ["PLAYER::SET_PLAYER_WEAPON_DAMAGE_MODIFIER($player, 1.0)"]
+

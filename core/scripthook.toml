@@ -1,0 +1,18 @@
+# gta-vi-scripthook: settings of the hook DLL (next to scripthook.dll). Every key is optional.
+
+# The name natives.tsv locations use for the game's executable ("game" always works too). The
+# hook finds the game's code in memory itself: the process's executable, or an executable image
+# mapped by a runtime (the largest one when several are).
+game_module = "game_scarlett_master.exe"
+
+# Your natives database (docs/natives-database.md); relative paths are relative to this folder.
+natives = ["natives.tsv", "data/natives.tsv"]
+
+# Plugins: plugins\<name>\ folders (with plugin.toml or mod.toml naming the DLL) or loose DLLs.
+plugins = "plugins"
+
+# Draw the overlay (hooks the DXGI swap chain's Present).
+overlay = true
+
+# Seconds to keep looking for the script tick after start (the game may map its code later).
+tick_wait = 60

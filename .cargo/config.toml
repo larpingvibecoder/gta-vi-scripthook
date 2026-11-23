@@ -1,0 +1,4 @@
+# Plugins are DLLs loaded into the host's process: link the C runtime statically so they need
+# nothing installed next to them.
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

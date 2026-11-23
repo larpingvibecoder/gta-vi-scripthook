@@ -1,0 +1,152 @@
+# gta-vi-scripthook trainer — player features
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# Data, not code: each [[feature]] lists the statements it runs (docs/trainer.md). Native names
+# are the engine lineage's public names, used as candidates: none is known for this game until
+# the owner's natives database (natives.tsv) gives identifiers, so the trainer greys a feature
+# out with the native it still needs. Override any feature by id in a file of your own.
+
+
+[[feature]]
+id = "health"
+name = "Invincible"
+group = "Player"
+kind = "toggle"
+data_feature = "god mode / invincible"
+tick = ["PLAYER::SET_PLAYER_INVINCIBLE($player, true)"]
+off = ["PLAYER::SET_PLAYER_INVINCIBLE($player, false)"]
+
+[[feature]]
+id = "heal"
+name = "Heal and refill armour"
+group = "Player"
+kind = "action"
+data_feature = "heal / refill health and armour"
+run = [
+  "ENTITY::SET_ENTITY_HEALTH($ped, ENTITY::GET_ENTITY_MAX_HEALTH($ped), 0)",
+  "PED::SET_PED_ARMOUR($ped, 100)",
+  "PED::CLEAR_PED_BLOOD_DAMAGE($ped)",
+]
+
+[[feature]]
+id = "armour"
+name = "Unlimited armour"
+group = "Player"
+kind = "toggle"
+data_feature = "heal / refill health and armour"
+slider = { min = 0, max = 200, step = 10 }
+value = 100
+tick = ["PED::SET_PED_ARMOUR($ped, int($value))"]
+
+[[feature]]
+id = "police"
+name = "Never wanted"
+group = "Player"
+kind = "toggle"
+data_feature = "never wanted / clear wanted"
+on = ["PLAYER::SET_MAX_WANTED_LEVEL(0)"]
+tick = ["PLAYER::CLEAR_PLAYER_WANTED_LEVEL($player)"]
+off = ["PLAYER::SET_MAX_WANTED_LEVEL(5)"]
+
+[[feature]]
+id = "wanted_level"
+name = "Wanted level"
+group = "Player"
+kind = "value"
+data_feature = "never wanted / clear wanted"
+slider = { min = 0, max = 5, step = 1 }
+value = 0
+run = ["PLAYER::SET_PLAYER_WANTED_LEVEL($player, int($value), false)", "PLAYER::SET_PLAYER_WANTED_LEVEL_NOW($player, false)"]
+
+[[feature]]
+id = "stamina"
+name = "Unlimited stamina and breath"
+group = "Player"
+kind = "toggle"
+data_feature = "unlimited stamina"
+tick = ["PLAYER::RESTORE_PLAYER_STAMINA($player, 1.0)", "PED::SET_PED_MAX_TIME_UNDERWATER($ped, 1000.0)"]
+
+[[feature]]
+id = "super_jump"
+name = "Super jump"
+group = "Player"
+kind = "toggle"
+data_feature = "super jump"
+tick = ["MISC::SET_SUPER_JUMP_THIS_FRAME($player)"]
+
+[[feature]]
+id = "fast_run"
+name = "Fast run"
+group = "Player"
+kind = "toggle"
+data_feature = "fast run / sprint multiplier"
+slider = { min = 1, max = 1.49, step = 0.05 }
+value = 1.49
+on = ["PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER($player, $value)"]
+off = ["PLAYER::SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER($player, 1.0)"]
+
+[[feature]]
+id = "fast_swim"
+name = "Fast swim"
+group = "Player"
+kind = "toggle"
+data_feature = "fast swim"
+slider = { min = 1, max = 1.49, step = 0.05 }
+value = 1.49
+on = ["PLAYER::SET_SWIM_MULTIPLIER_FOR_PLAYER($player, $value)"]
+off = ["PLAYER::SET_SWIM_MULTIPLIER_FOR_PLAYER($player, 1.0)"]
+
+[[feature]]
+id = "invisible"
+name = "Invisible"
+group = "Player"
+kind = "toggle"
+data_feature = "invisible"
+on = ["ENTITY::SET_ENTITY_VISIBLE($ped, false, false)"]
+off = ["ENTITY::SET_ENTITY_VISIBLE($ped, true, false)"]
+
+[[feature]]
+id = "no_ragdoll"
+name = "No ragdoll"
+group = "Player"
+kind = "toggle"
+data_feature = "no ragdoll / stay on bike"
+tick = ["PED::SET_PED_CAN_RAGDOLL($ped, false)"]
+off = ["PED::SET_PED_CAN_RAGDOLL($ped, true)"]
+
+[[feature]]
+id = "player_model"
+name = "Change player model"
+group = "Player"
+kind = "list"
+list = "peds"
+input = true
+data_feature = "change player model"
+run = [
+  "STREAMING::REQUEST_MODEL($hash)",
+  "waitfor STREAMING::HAS_MODEL_LOADED($hash), 5000",
+  "if !$ok: fail(\"model \" + $label + \" did not load\")",
+  "PLAYER::SET_PLAYER_MODEL($player, $hash)",
+  "PED::SET_PED_DEFAULT_COMPONENT_VARIATION(PLAYER::PLAYER_PED_ID())",
+  "STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED($hash)",
+]
+
+[[feature]]
+id = "add_money"
+name = "Add money"
+group = "Player"
+kind = "action"
+data_feature = "money"
+slider = { min = 1000, max = 10000000, step = 1000 }
+value = 100000
+note = "adds the amount to the cash stat ($cash_stat; the stat name of this build is unknown until the executable)"
+run = ["$m = 0", "STATS::STAT_GET_INT($cash_stat, &$m, -1)", "STATS::STAT_SET_INT($cash_stat, $m + int($value), true)", "notify(\"money: \" + ($m + int($value)))"]
+
+[[feature]]
+id = "clean_clothes"
+name = "Clean and fix clothes"
+group = "Player"
+kind = "action"
+data_feature = "heal / refill health and armour"
+run = ["PED::CLEAR_PED_BLOOD_DAMAGE($ped)", "PED::RESET_PED_VISIBLE_DAMAGE($ped)", "PED::CLEAR_PED_WETNESS($ped)"]
+

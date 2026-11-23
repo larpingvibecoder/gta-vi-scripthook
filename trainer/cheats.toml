@@ -1,0 +1,123 @@
+# gta-vi-scripthook trainer — memory cheats
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# A memory cheat writes title memory through the host's bounds-checked memory API. A feature
+# with the same id (or `cheat = "<id>"`) uses its cheat when its natives are not available yet.
+# Every location below is unknown until the owner's executable has been examined (for example
+# with the host's value scanner): replace `unknown = "..."` with one of
+#
+#   address = 0x7FF612340000
+#   module = "game.exe"; offset = 0x1234
+#   module = "game.exe"; export = "Symbol"
+#   module = "game.exe"; section = ".text"; pattern = "48 8B 05 ?? ?? ?? ??"; rip = { disp = 3, len = 7 }; offset = 0
+#   chain = [0x10, 0x1A4]            (after any of the above: a = *(u64*)a + offset per entry)
+#
+# Kinds: freeze (write `value` every frame), set (write once), multiply (scale every change by
+# `factor`; `direction` = "decrease" / "increase" limits it), patch (`bytes` while on).
+# Types: i32 i64 f32 f64 vec3 (3 x f32).
+
+[[location]]
+id = "player_money"
+type = "i32"
+unknown = "player money: location unknown until the executable is available"
+
+[[location]]
+id = "player_health"
+type = "f32"
+unknown = "player health: location unknown until the executable is available"
+
+[[location]]
+id = "player_armour"
+type = "f32"
+unknown = "player armour: location unknown until the executable is available"
+
+[[location]]
+id = "vehicle_fuel"
+type = "f32"
+unknown = "vehicle fuel: location unknown until the executable is available"
+
+[[location]]
+id = "wanted_level"
+type = "i32"
+unknown = "wanted level: location unknown until the executable is available"
+
+[[location]]
+id = "gang_relationship"
+type = "i32"
+unknown = "gang relationship to the player: location unknown until the executable is available"
+
+[[location]]
+id = "traffic_speed"
+type = "f32"
+unknown = "traffic speed factor: location unknown until the executable is available"
+
+# ---- cheats backing features (used while the feature's natives are unknown) -----------------
+
+[[cheat]]
+id = "health"
+name = "Invincible"
+group = "Player"
+kind = "freeze"
+type = "f32"
+value = 200.0
+location = "player_health"
+
+[[cheat]]
+id = "armour"
+name = "Unlimited armour"
+group = "Player"
+kind = "freeze"
+type = "f32"
+value = 100.0
+location = "player_armour"
+
+[[cheat]]
+id = "police"
+name = "Never wanted"
+group = "Player"
+kind = "freeze"
+type = "i32"
+value = 0
+location = "wanted_level"
+
+# ---- cheats with no feature of their own ------------------------------------------------------
+
+[[cheat]]
+id = "money"
+name = "Unlimited money"
+group = "Player"
+kind = "freeze"
+type = "i32"
+value = 999999999
+location = "player_money"
+note = "keeps the cash value at the maximum while on"
+
+[[cheat]]
+id = "fuel"
+name = "Unlimited fuel"
+group = "Vehicle"
+kind = "multiply"
+type = "f32"
+factor = 0.0
+direction = "decrease"
+location = "vehicle_fuel"
+note = "fuel never decreases (factor 0 on every decrease)"
+
+[[cheat]]
+id = "gangs_friendly"
+name = "Gangs friendly"
+group = "World"
+kind = "freeze"
+type = "i32"
+value = 1
+location = "gang_relationship"
+
+[[cheat]]
+id = "traffic_speed"
+name = "Traffic speed"
+group = "World"
+kind = "freeze"
+type = "f32"
+value = 1.0
+slider = { min = 0.0, max = 3.0, step = 0.25 }
+location = "traffic_speed"

@@ -1,0 +1,42 @@
+# natives.tsv of Sonoma Runtime's synthetic test title (tests/title/title_mods.cpp in Sonoma Runtime).
+# NOT game data: the test title registers these names itself, with identifiers
+# joaat(name) << 32 | (joaat(name) ^ 0x9E3779B9), in a 4-bucket chained table found by a byte
+# pattern, with a call context that differs from the usual layout. Used by the tests and as an
+# example of the format (docs/natives-database.md).
+identifier	args	returns	name	params	doc
+@native_context	{ size = 0x80, args_ptr = 0x00, arg_count = 0x08, data_count = 0x0C, return_ptr = 0x10, fixup_out = 0x18, fixup_in = 0x38 }
+@native_table	{ kind = "buckets", buckets = 4, bucket_index = "modulo", hash_xor = "0x5A5A5A5A00000000", module = "srt_test_title.exe", section = ".data", pattern = "53 52 54 2D 4E 41 54 49 56 45 53 2D 4D 41 47", offset = 16 }
+@script_tick	{ module = "srt_test_title.exe", export = "title_script_tick" }
+0x1bfb3b7285cc42cb	0	int	PLAYER::PLAYER_ID	-	-
+0xa8e75fca36d02673	0	Ped	PLAYER::PLAYER_PED_ID	-	-
+0x51218e14cf16f7ad	Ped, BOOL	Vehicle	PED::GET_VEHICLE_PED_IS_IN	ped, last	-
+0xb4deb20c2ae9cbb5	Player, BOOL	void	PLAYER::SET_PLAYER_INVINCIBLE	player, toggle	-
+0x1338d3258d0faa9c	Entity, BOOL	Vector3	ENTITY::GET_ENTITY_COORDS	entity, living	-
+0x1adc1c9184eb6528	7	0	ENTITY::SET_ENTITY_COORDS_NO_OFFSET	-	-
+0x30cbd46caefcadd5	Entity	float	ENTITY::GET_ENTITY_HEADING	entity	-
+0x0034bb3b9e03c282	Entity, float	void	ENTITY::SET_ENTITY_HEADING	entity, heading	-
+0x1d9f3fb483a8460d	Entity, float, float, float	void	ENTITY::SET_ENTITY_VELOCITY	entity, x, y, z	-
+0xc95d4207576a3bbe	int	Vector3	CAM::GET_GAMEPLAY_CAM_ROT	order	-
+0xecf3a27a72c4dbc3	Entity, float, float, float	Vector3	ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS	entity, dx, dy, dz	-
+0x55bf5698cb882f21	Hash	void	STREAMING::REQUEST_MODEL	model	-
+0xa26bea903c5c9329	Hash	BOOL	STREAMING::HAS_MODEL_LOADED	model	-
+0xc9e540e857d23951	Hash	void	STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED	model	-
+0xb15f8c702f68f5c9	Hash, float, float, float, float, BOOL, BOOL, BOOL	Vehicle	VEHICLE::CREATE_VEHICLE	model, x, y, z, heading, flag1, flag2, flag3	-
+0xf41d97596a2aeee0	Vehicle, float	BOOL	VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY	vehicle, height	-
+0xe133a78e7f04de37	Ped, Vehicle, int	void	PED::SET_PED_INTO_VEHICLE	ped, vehicle, seat	-
+0x5fd8cdc6c1efb47f	const char*	void	MISC::SET_WEATHER_TYPE_NOW_PERSIST	name	-
+0x79939588e7a4ec31	int, int, int	void	CLOCK::SET_CLOCK_TIME	hour, minute, second	-
+0xd23ea7c84c09de71	Player, int, BOOL	void	PLAYER::SET_PLAYER_WANTED_LEVEL	player, level, delayed	-
+0x1770c1448947b8fd	Player, BOOL	void	PLAYER::SET_PLAYER_WANTED_LEVEL_NOW	player, flag	-
+0x24556aa1ba621318	int	void	PLAYER::SET_MAX_WANTED_LEVEL	level	-
+0x2e2e89f9b019f040	Player	void	PLAYER::CLEAR_PLAYER_WANTED_LEVEL	player	-
+0xfe28f42f601f8d96	Hash, int*, int	BOOL	STATS::STAT_GET_INT	stat, out, slot	-
+0xf9bcb629678bcf90	Hash, int, BOOL	BOOL	STATS::STAT_SET_INT	stat, value, save	-
+0x0c2cf9ef921b8056	Vector3, float	Vector3	TEST::VEC_SCALE	v, factor	-
+0x59ebb43dc7dccd84	const char*	int	TEST::STR_LEN	text	-
+0xc1c2b3695ff5cad0	0	const char*	TEST::GET_NAME	-	-
+0x97fe065009c97fe9	int	BOOL	TEST::IS_EVEN	n	-
+0xa139a87e3f0ed1c7	Hash	Hash	TEST::ECHO_HASH	h	-
+0x9ceb771f02dc0ea6	float*	void	TEST::GET_HEALTH_OUT	health	-
+0xd9db487547ec31cc	Vector3*	BOOL	TEST::GET_POS_FIXUP	pos	-
+0x4942ddead775a453	0	int	TEST::THREAD_ID	-	-

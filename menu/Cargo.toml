@@ -1,0 +1,20 @@
+[package]
+name = "shk-menu"
+description = "The gta-vi-scripthook mod menu: a plugin publishing the menu service, drawing its own UI where the host can draw, mirroring into the host's menu otherwise."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[lib]
+name = "shk_menu"
+path = "src/lib.rs"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "menu-preview"
+path = "src/bin/menu-preview.rs"
+
+[dependencies]
+scripthook-sdk = { path = "../sdk/rust" }

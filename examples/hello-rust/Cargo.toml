@@ -1,0 +1,16 @@
+[package]
+name = "hello-rust"
+description = "Minimal gta-vi-scripthook plugin in Rust: a notice, a native call, a hotkey."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[lib]
+name = "hello_rust"
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+[dependencies]
+scripthook-sdk = { path = "../../sdk/rust" }

@@ -1,0 +1,16 @@
+# gta-vi-scripthook menu settings (docs/menu-guide.md). Every key is optional.
+
+# keyboard key and pad chord that open / close the menu (when it draws itself)
+open_key = "F4"
+open_chord = "RB+LEFT"
+# numpad 8 / 2 / 4 / 6 / 5 / 0 navigate as well
+numpad = true
+# "left" or "right"
+position = "left"
+# text size: 0 = automatic (1x below 600 lines, 2x up to 1300, 3x above), or 1, 2, 3
+scale = 0
+# lines plugins show at the top right (coordinates, FPS, ...)
+show_hud = true
+# "auto": draw when the host offers drawing primitives, else mirror into the host's menu;
+# "mirror": always use the host's menu
+mode = "auto"

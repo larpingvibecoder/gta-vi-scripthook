@@ -1,0 +1,55 @@
+# gta-vi-scripthook trainer — misc features
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# Data, not code: each [[feature]] lists the statements it runs (docs/trainer.md). Native names
+# are the engine lineage's public names, used as candidates: none is known for this game until
+# the owner's natives database (natives.tsv) gives identifiers, so the trainer greys a feature
+# out with the native it still needs. Override any feature by id in a file of your own.
+
+
+[[feature]]
+id = "fly"
+name = "Fly"
+group = "Misc"
+kind = "toggle"
+data_feature = "no clip / freeze"
+slider = { min = 1, max = 200, step = 1 }
+value = 15
+on = ["$fp = ENTITY::GET_ENTITY_COORDS($ped, true)"]
+tick = ["$fp = fly($fp, $cam_heading)", "ENTITY::SET_ENTITY_COORDS_NO_OFFSET($ped, $fp, false, false, false)", "ENTITY::SET_ENTITY_VELOCITY($ped, 0.0, 0.0, 0.0)"]
+
+[[feature]]
+id = "collision_off"
+name = "Collision off"
+group = "Misc"
+kind = "toggle"
+data_feature = "no clip / freeze"
+tick = ["ENTITY::SET_ENTITY_COLLISION($ped, false, false)"]
+off = ["ENTITY::SET_ENTITY_COLLISION($ped, true, true)"]
+
+[[feature]]
+id = "noclip"
+name = "Noclip"
+group = "Misc"
+kind = "toggle"
+data_feature = "no clip / freeze"
+slider = { min = 1, max = 200, step = 1 }
+value = 15
+on = ["$fp = ENTITY::GET_ENTITY_COORDS($ped, true)"]
+tick = ["$fp = fly($fp, $cam_heading)", "ENTITY::SET_ENTITY_COORDS_NO_OFFSET($ped, $fp, false, false, false)", "ENTITY::SET_ENTITY_VELOCITY($ped, 0.0, 0.0, 0.0)", "ENTITY::SET_ENTITY_COLLISION($ped, false, false)"]
+off = ["ENTITY::SET_ENTITY_COLLISION($ped, true, true)"]
+
+[[feature]]
+id = "show_fps"
+name = "Show FPS"
+group = "Misc"
+kind = "toggle"
+note = "frame rate of presented frames (needs no natives)"
+tick = ["hud(\"FPS \" + int(fps()))"]
+
+[[feature]]
+id = "hide_hud"
+name = "Hide HUD"
+group = "Misc"
+kind = "toggle"
+tick = ["HUD::HIDE_HUD_AND_RADAR_THIS_FRAME()"]

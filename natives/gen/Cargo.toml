@@ -1,0 +1,18 @@
+[package]
+name = "shk-natives"
+description = "The natives database tool of gta-vi-scripthook: checks natives.tsv, generates natives.h / natives.rs, imports public documentation, verifies table patterns against the owner's executable."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "shk-natives"
+path = "src/main.rs"
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+scripthook-sdk = { path = "../../sdk/rust" }

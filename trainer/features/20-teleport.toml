@@ -1,0 +1,60 @@
+# gta-vi-scripthook trainer — teleport features
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# Data, not code: each [[feature]] lists the statements it runs (docs/trainer.md). Native names
+# are the engine lineage's public names, used as candidates: none is known for this game until
+# the owner's natives database (natives.tsv) gives identifiers, so the trainer greys a feature
+# out with the native it still needs. Override any feature by id in a file of your own.
+
+
+[[feature]]
+id = "tp_waypoint"
+name = "Teleport to waypoint"
+group = "Teleport"
+kind = "action"
+data_feature = "teleport to waypoint"
+run = [
+  "$b = HUD::GET_FIRST_BLIP_INFO_ID(8)",
+  "if !HUD::DOES_BLIP_EXIST($b): fail(\"no waypoint on the map\")",
+  "$w = HUD::GET_BLIP_INFO_ID_COORD($b)",
+  "$e = $ped",
+  "if $veh: $e = $veh",
+  "$z = 0.0",
+  "$found = false",
+  "repeat 25: ENTITY::SET_ENTITY_COORDS_NO_OFFSET($e, $w.x, $w.y, 800.0 - $i * 32.0, false, false, false); wait 20; if MISC::GET_GROUND_Z_FOR_3D_COORD($w.x, $w.y, 800.0 - $i * 32.0, &$z, false, false): $found = true; break",
+  "if !$found: $z = $w.z",
+  "ENTITY::SET_ENTITY_COORDS_NO_OFFSET($e, $w.x, $w.y, $z + 1.0, false, false, false)",
+]
+
+[[feature]]
+id = "tp_location"
+name = "Teleport to a location"
+group = "Teleport"
+kind = "list"
+list = "locations"
+data_feature = "teleport to location"
+run = [
+  "$e = $ped",
+  "if $veh: $e = $veh",
+  "ENTITY::SET_ENTITY_COORDS_NO_OFFSET($e, $pos, false, false, false)",
+  "if $heading: ENTITY::SET_ENTITY_HEADING($e, $heading)",
+  "notify(\"teleported to \" + $label)",
+]
+
+[[feature]]
+id = "save_location"
+name = "Save current location"
+group = "Teleport"
+kind = "action"
+data_feature = "teleport to location"
+note = "appends to saved-locations.toml in the mods folder; listed under Teleport to a location"
+run = ["save_location(ENTITY::GET_ENTITY_COORDS($ped, true), ENTITY::GET_ENTITY_HEADING($ped))"]
+
+[[feature]]
+id = "show_coords"
+name = "Show coordinates"
+group = "Teleport"
+kind = "toggle"
+data_feature = "core: local player handles"
+tick = ["hud(\"pos \" + ENTITY::GET_ENTITY_COORDS($ped, true) + \"  heading \" + ENTITY::GET_ENTITY_HEADING($ped))"]
+

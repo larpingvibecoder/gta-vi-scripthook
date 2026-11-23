@@ -1,0 +1,11 @@
+[package]
+name = "scripthook-sdk"
+description = "Plugin SDK for gta-vi-scripthook (Rust): the scripthook.h ABI, safe wrappers, typed native calls, script fibers, menus, drawing, config readers. No external crates."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+
+[lib]
+path = "src/lib.rs"

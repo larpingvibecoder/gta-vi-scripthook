@@ -1,0 +1,19 @@
+# build output
+/target/
+/build/
+/dist/
+*.obj
+*.exp
+*.lib
+*.pdb
+*.ilk
+*.dll
+
+# the owner's local natives database and game data never go into the repository
+/natives/local/
+natives.local.tsv
+trainer-data/
+
+# test scratch and previews made locally
+/tests/scratch/
+*.log

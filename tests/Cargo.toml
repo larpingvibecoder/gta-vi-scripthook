@@ -1,0 +1,24 @@
+[package]
+name = "shk-tests"
+description = "Integration tests: the hook DLL, the menu, the trainer and the examples on the synthetic test target (and, optionally, on Sonoma Runtime's test title); ABI checks of the C headers."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish.workspace = true
+build = "build.rs"
+
+[lib]
+path = "src/lib.rs"
+
+[[bin]]
+name = "shk-test-target"
+path = "target/main.rs"
+
+[dependencies]
+scripthook-sdk = { path = "../sdk/rust" }
+shk-sys = { path = "../core/sys" }
+shk-natives = { path = "../natives/gen" }
+
+[build-dependencies]
+shk-natives = { path = "../natives/gen" }

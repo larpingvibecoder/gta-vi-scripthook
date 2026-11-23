@@ -1,0 +1,10 @@
+# gta-vi-scripthook trainer settings (docs/trainer.md). Every key is optional.
+
+# the title the features are written for (a warning is logged on another title)
+# game = "game_scarlett_master.exe"   (scripthook.toml game_module; a warning when it differs)
+
+# extra trainer data folders (lists such as vehicles.txt, weapons.txt, peds.txt, weather.txt,
+# locations.tsv; features.tsv; trainer.toml with feature overrides; cheats.toml). Relative paths
+# are relative to this folder. SHK_TRAINER_DATA adds more (';'-separated).
+# The repository ships no list data: point this at your own.
+data = []

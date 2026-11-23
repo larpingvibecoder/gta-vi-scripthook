@@ -1,0 +1,8 @@
+# Optional: lets Sonoma Runtime (or another runtime with a compatible mod folder) load the hook
+# as a plugin. Not needed with shk-loader. The hook uses none of the runtime's API.
+id = "gta-vi-scripthook"
+name = "gta-vi-scripthook"
+version = "0.1.0"
+author = "The gta-vi-scripthook contributors"
+description = "Script hook, menu and trainer (single-player only). Plugins live in the plugins folder next to scripthook.dll."
+plugin = "scripthook.dll"

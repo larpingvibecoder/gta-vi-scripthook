@@ -1,0 +1,84 @@
+# gta-vi-scripthook trainer — vehicle features
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# Data, not code: each [[feature]] lists the statements it runs (docs/trainer.md). Native names
+# are the engine lineage's public names, used as candidates: none is known for this game until
+# the owner's natives database (natives.tsv) gives identifiers, so the trainer greys a feature
+# out with the native it still needs. Override any feature by id in a file of your own.
+
+
+[[feature]]
+id = "spawn_vehicle"
+name = "Spawn vehicle"
+group = "Vehicle"
+kind = "list"
+list = "vehicles"
+input = true
+data_feature = "spawn vehicle"
+run = [
+  "STREAMING::REQUEST_MODEL($hash)",
+  "waitfor STREAMING::HAS_MODEL_LOADED($hash), 5000",
+  "if !$ok: fail(\"model \" + $label + \" did not load\")",
+  "$p = ENTITY::GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS($ped, 0.0, 5.0, 0.0)",
+  "$v = VEHICLE::CREATE_VEHICLE($hash, $p, ENTITY::GET_ENTITY_HEADING($ped), false, false, false)",
+  "if !$v: fail(\"could not create \" + $label)",
+  "VEHICLE::SET_VEHICLE_ON_GROUND_PROPERLY($v, 5.0)",
+  "if on(\"spawn_inside\"): PED::SET_PED_INTO_VEHICLE($ped, $v, -1)",
+  "STREAMING::SET_MODEL_AS_NO_LONGER_NEEDED($hash)",
+  "notify(\"spawned \" + $label)",
+]
+
+[[feature]]
+id = "spawn_inside"
+name = "Spawn into the vehicle"
+group = "Vehicle"
+kind = "toggle"
+enabled = true
+note = "setting of Spawn vehicle"
+
+[[feature]]
+id = "fix_vehicle"
+name = "Fix and clean vehicle"
+group = "Vehicle"
+kind = "action"
+data_feature = "repair / clean vehicle"
+run = ["if !$veh: fail(\"not in a vehicle\")", "VEHICLE::SET_VEHICLE_FIXED($veh)", "VEHICLE::SET_VEHICLE_DIRT_LEVEL($veh, 0.0)", "VEHICLE::SET_VEHICLE_ENGINE_HEALTH($veh, 1000.0)"]
+
+[[feature]]
+id = "vehicle_health"
+name = "Vehicle god mode"
+group = "Vehicle"
+kind = "toggle"
+data_feature = "vehicle god mode"
+tick = ["if $veh: ENTITY::SET_ENTITY_INVINCIBLE($veh, true); VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED($veh, false)"]
+off = ["if $veh: ENTITY::SET_ENTITY_INVINCIBLE($veh, false); VEHICLE::SET_VEHICLE_CAN_BE_VISIBLY_DAMAGED($veh, true)"]
+
+[[feature]]
+id = "vehicle_colour"
+name = "Vehicle colour"
+group = "Vehicle"
+kind = "value"
+data_feature = "repair / clean vehicle"
+slider = { min = 0, max = 159, step = 1 }
+value = 0
+run = ["if !$veh: fail(\"not in a vehicle\")", "VEHICLE::SET_VEHICLE_COLOURS($veh, int($value), int($value))"]
+
+[[feature]]
+id = "vehicle_boost"
+name = "Boost"
+group = "Vehicle"
+kind = "action"
+data_feature = "vehicle speed boost"
+slider = { min = 10, max = 150, step = 5 }
+value = 60
+run = ["if !$veh: fail(\"not in a vehicle\")", "VEHICLE::SET_VEHICLE_FORWARD_SPEED($veh, $value)"]
+
+[[feature]]
+id = "seatbelt"
+name = "Seatbelt (can't be knocked off)"
+group = "Vehicle"
+kind = "toggle"
+data_feature = "no ragdoll / stay on bike"
+tick = ["PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE($ped, 1)", "PED::SET_PED_CONFIG_FLAG($ped, 32, false)"]
+off = ["PED::SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE($ped, 0)", "PED::SET_PED_CONFIG_FLAG($ped, 32, true)"]
+

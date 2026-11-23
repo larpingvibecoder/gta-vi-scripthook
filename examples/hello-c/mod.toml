@@ -1,0 +1,7 @@
+# Plugin manifest of the hello-c example: read by scripthook.dll (plugins\<name>\), also a mod manifest for runtimes with mod folders.
+id = "hello-c"
+name = "hello-c (gta-vi-scripthook example)"
+version = "0.1.0"
+author = "The gta-vi-scripthook contributors"
+description = "Hello world in C: a notice, a native call, a hotkey."
+plugin = "hello_c.dll"

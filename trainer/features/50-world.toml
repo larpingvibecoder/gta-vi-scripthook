@@ -1,0 +1,83 @@
+# gta-vi-scripthook trainer — world features
+# SPDX-License-Identifier: MIT OR Apache-2.0
+#
+# Data, not code: each [[feature]] lists the statements it runs (docs/trainer.md). Native names
+# are the engine lineage's public names, used as candidates: none is known for this game until
+# the owner's natives database (natives.tsv) gives identifiers, so the trainer greys a feature
+# out with the native it still needs. Override any feature by id in a file of your own.
+
+
+[[feature]]
+id = "set_hour"
+name = "Set hour"
+group = "World"
+kind = "value"
+data_feature = "time of day / freeze clock"
+slider = { min = 0, max = 23, step = 1 }
+value = 12
+run = ["CLOCK::SET_CLOCK_TIME(int($value), 0, 0)"]
+
+[[feature]]
+id = "time_freeze"
+name = "Freeze time"
+group = "World"
+kind = "toggle"
+data_feature = "time of day / freeze clock"
+on = ["CLOCK::PAUSE_CLOCK(true)"]
+off = ["CLOCK::PAUSE_CLOCK(false)"]
+
+[[feature]]
+id = "time_scale"
+name = "Time scale (slow motion)"
+group = "World"
+kind = "value"
+data_feature = "slow motion"
+slider = { min = 0.1, max = 1, step = 0.1 }
+value = 1
+run = ["MISC::SET_TIME_SCALE($value)"]
+
+[[feature]]
+id = "weather"
+name = "Weather"
+group = "World"
+kind = "list"
+list = "weathers"
+data_feature = "weather"
+run = ["MISC::SET_WEATHER_TYPE_NOW_PERSIST($item)", "notify(\"weather: \" + $item)"]
+
+[[feature]]
+id = "clear_area"
+name = "Clear area of peds and vehicles"
+group = "World"
+kind = "action"
+data_feature = "traffic / ped density"
+run = ["MISC::CLEAR_AREA(ENTITY::GET_ENTITY_COORDS($ped, true), 100.0, true, false, false, false)"]
+
+[[feature]]
+id = "traffic_density"
+name = "Traffic and ped density"
+group = "World"
+kind = "toggle"
+data_feature = "traffic / ped density"
+slider = { min = 0, max = 3, step = 0.25 }
+value = 0
+tick = ["VEHICLE::SET_VEHICLE_DENSITY_MULTIPLIER_THIS_FRAME($value)", "PED::SET_PED_DENSITY_MULTIPLIER_THIS_FRAME($value)"]
+
+[[feature]]
+id = "police_dispatch_off"
+name = "Police off"
+group = "World"
+kind = "toggle"
+data_feature = "police ignore player"
+tick = ["PLAYER::SET_POLICE_IGNORE_PLAYER($player, true)", "PLAYER::SET_DISPATCH_COPS_FOR_PLAYER($player, false)"]
+off = ["PLAYER::SET_POLICE_IGNORE_PLAYER($player, false)", "PLAYER::SET_DISPATCH_COPS_FOR_PLAYER($player, true)"]
+
+[[feature]]
+id = "npc_ignore"
+name = "NPCs ignore you"
+group = "World"
+kind = "toggle"
+data_feature = "ignored by everyone"
+tick = ["PLAYER::SET_EVERYONE_IGNORE_PLAYER($player, true)"]
+off = ["PLAYER::SET_EVERYONE_IGNORE_PLAYER($player, false)"]
+

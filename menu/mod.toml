@@ -1,0 +1,8 @@
+# Plugin manifest of the gta-vi-scripthook menu (docs/menu-guide.md): read by scripthook.dll,
+# also a mod manifest for runtimes with mod folders.
+id = "scripthook-menu"
+name = "gta-vi-scripthook menu"
+version = "0.1.0"
+author = "The gta-vi-scripthook contributors"
+description = "The mod menu: publishes the scripthook.menu service; draws itself where the host can draw, mirrors into the host's menu otherwise."
+plugin = "shk_menu.dll"
